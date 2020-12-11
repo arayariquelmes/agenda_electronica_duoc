@@ -12,6 +12,8 @@ const marcarSesionIniciada = ()=>{
     document.querySelector("#imagen-usuario").src = usuario.image;
     document.querySelector('#datos-usuario').classList.remove("d-none");
     //4. Mostrar el formulario y la funcionalidad de la agenda
+    document.querySelector("#datos-agenda").classList.remove('d-none');
+    cargarTabla();
 };
 
 //Aqui voy a marcar la aplicacion en su estado cerrada sesión (ocultar lo que tenga que ocultar y mostrar lo que tenga que mostrar)
@@ -23,6 +25,7 @@ const marcarSesionCerrada = ()=>{
     document.querySelector("#cerrar-btn").classList.add("d-none");
     //4. Ocultar el formulario y la funcionalidad de la agende
     document.querySelector("#datos-usuario").classList.add("d-none");
+    document.querySelector("#datos-agenda").classList.add('d-none');
 };
 
 const getUsuario = ()=>{
@@ -35,6 +38,23 @@ const getUsuario = ()=>{
     }
     return usuario;
 };
+
+const getAgenda = ()=>{
+    let agenda = localStorage.getItem("agenda");
+    if(agenda){
+        agenda = JSON.parse(agenda);
+    } else{
+        agenda = [];
+    }
+    return agenda;
+}
+
+const agregarAgenda = (contacto)=>{
+    let agenda = getAgenda();
+    agenda.push(contacto);
+    localStorage.setItem("agenda", JSON.stringify(agenda));
+}
+
 
 function onSignIn(googleUser) {
     let profile = googleUser.getBasicProfile();
@@ -67,3 +87,39 @@ function signOut() {
   });
 
 document.querySelector("#cerrar-btn").addEventListener("click",signOut);
+
+const cargarTabla = ()=>{
+   //Buscar la agenda
+   const agenda = getAgenda();
+   const agendaDiv = document.querySelector('.agenda-div');
+   agendaDiv.innerHTML = '';
+    //Si la agenda esta vacia, mostrar el molde de que no existen datos
+    if(agenda.length === 0){
+        agendaDiv.appendChild(document.querySelector('.mensaje-vacio').cloneNode(true));
+    } else {
+        //Si la agenda tiene datos, generar la tabla
+        const moldeTabla = document.querySelector('.personas-table').cloneNode(true);
+        const tbody = moldeTabla.querySelector('tbody');
+        agenda.forEach(a=>{
+            let tr = document.createElement("tr");
+            let tdNombre = document.createElement("td");
+            let tdCorreo = tdNombre.cloneNode(true);
+            tdNombre.innerText = a.nombre;
+            tdCorreo.innerText = a.correo;
+            tr.appendChild(tdNombre);
+            tr.appendChild(tdCorreo);
+            tbody.appendChild(tr);
+
+        });
+        agendaDiv.appendChild(moldeTabla);
+    }
+};
+
+
+document.querySelector("#registrar-btn").addEventListener('click', function(){
+    let nombre = document.querySelector("#nombre-txt").value.trim();
+    let correo = document.querySelector("#correo-txt").value.trim();
+    agregarAgenda({nombre:nombre,correo:correo});
+    toastr.success("Contacto registrado!");
+    cargarTabla();
+});
