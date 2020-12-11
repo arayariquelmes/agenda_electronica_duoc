@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="496586686605-d667m7hla8biuedb9p8rvscv43f7rl7g.apps.googleusercontent.com">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Agenda Electrónica</title>
+  </head>
+  <body>
+    <header class="bg-secondary bg-gradient text-white">
+        <nav class="navbar navbar-dark bg-success">
+            <div class="container-fluid">
+              <a class="navbar-brand">Mi Agenda</a>
+              <form class="d-flex">
+                <div id="iniciar-btn" class="g-signin2" data-onsuccess="onSignIn"></div>
+                <button id="cerrar-btn" type="button" class="btn btn-link link-light">Cerrar Sesión</button>
+              </form>
+            </div>
+          </nav>
+    </header>
+    <main class="container-fluid">
+        <section id="datos-usuario" class="row mt-5">
+            <div class="col-12 col-lg-5 mx-auto">
+                <div class="card">
+                    <div class="card-header bg-success text-white bg-gradient text-center">
+                        <span>Datos del Usuario</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group text-center">
+                            <li class="list-group-item">Nombre: <span id="nombre-usuario"></span> </li>
+                            <li class="list-group-item">Correo: <span id="correo-usuario"></span></li>
+                            <li class="list-group-item">
+                                <img src="" class="rounded-circle" id="imagen-usuario" >
+                            </li>
+                          </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="js/init.js"></script>
+  </body>
+</html>
